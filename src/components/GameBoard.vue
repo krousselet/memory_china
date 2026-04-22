@@ -1,13 +1,14 @@
 <template>
   <div class="board" :style="{ gridTemplateColumns: `repeat(${gridCols}, 1fr)` }">
     <button
-      v-for="i in cardCount"
-      :key="i"
+      v-for="(card, index) in store.gameCards"
+      :key="index"
       class="card"
-      @click="flip(i - 1)"
-      :aria-label="`Card ${i}`"
+      @click="flip(index)"
+      :aria-label="`Card ${index + 1}`"
     >
-      {{ getCard(i - 1).symbol }}
+      <!-- Show symbol only if flipped or matched -->
+      {{ card.flipped || card.matched ? card.value : '?' }}
     </button>
   </div>
 </template>
@@ -18,15 +19,15 @@ import { useAppStore } from '@/stores/appStore'
 
 const store = useAppStore()
 
-const cardCount = computed(() => store.game?.cardCount || 0)
-const gridCols = computed(() => Math.ceil(Math.sqrt(cardCount.value)))
+// Calculate grid automatically
+const gridCols = computed(() => {
+  const count = store.gameCards.length
+  return count === 0 ? 4 : Math.ceil(Math.sqrt(count))
+})
 
-const getCard = (idx: number) => {
-  return store.game?.getCardSafe(idx) || { symbol: '?', flipped: false, matched: false }
-}
-
+// Flip card using YOUR store
 const flip = (idx: number) => {
-  store.game?.flipCard(idx)
+  store.flipCard(idx)
 }
 </script>
 
@@ -35,6 +36,8 @@ const flip = (idx: number) => {
   display: grid;
   gap: 1rem;
   padding: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
 }
 .card {
   aspect-ratio: 1/1;
@@ -43,5 +46,6 @@ const flip = (idx: number) => {
   border: none;
   background: var(--card);
   color: var(--text);
+  cursor: pointer;
 }
 </style>

@@ -25,7 +25,7 @@
 
       <div class="setting-group">
         <label>{{ $t('language') }}</label>
-        <select @change="changeLang($event)">
+          <select v-model="locale" @change="changeLang($event)">
           <option value="fr">Français</option>
           <option value="id">Indonesia</option>
           <option value="zh">中文</option>
@@ -33,6 +33,7 @@
           <option value="ru">Русский</option>
           <option value="it">Italiano</option>
           <option value="es">Español</option>
+          <option value="en">English</option>
         </select>
       </div>
     </div>

@@ -11,6 +11,7 @@ const routes = [
       { path: 'settings', component: () => import('@/pages/Settings.vue') },
       { path: 'leaderboard', component: () => import('@/pages/Leaderboard.vue') },
       { path: 'rules', component: () => import('@/pages/Rules.vue') },
+      { path: 'game', component: () => import('@/pages/Game.vue') },
     ],
   },
 ]

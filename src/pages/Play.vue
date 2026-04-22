@@ -36,7 +36,9 @@
 import { ref } from 'vue'
 import { useAppStore } from '@/stores/appStore'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router' 
 import type { GameMode, Difficulty } from '@/types'
+const router = useRouter()
 
 const { t } = useI18n()
 const store = useAppStore()
@@ -59,7 +61,7 @@ const selectMode = (mode: { id: GameMode }) => {
 
 const startGame = (mode: GameMode, diff: Difficulty) => {
   store.startGame(mode, diff)
-  alert(t('gameStarted'))
+  router.push('/game') 
 }
 </script>
 

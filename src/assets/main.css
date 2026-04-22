@@ -4,6 +4,8 @@
   --card: #f7f7f7;
   --accent: #7928ca;
   --gradient: linear-gradient(135deg, #7928ca, #ff0080);
+  --root-font-size: 16px; /* default */
+  font-size: var(--root-font-size); /* MAKE IT WORK */
 }
 
 .dark {
