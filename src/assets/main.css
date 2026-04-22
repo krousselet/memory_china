@@ -1,0 +1,73 @@
+:root {
+  --bg: #fff;
+  --text: #000;
+  --card: #f7f7f7;
+  --accent: #7928ca;
+  --gradient: linear-gradient(135deg, #7928ca, #ff0080);
+}
+
+.dark {
+  --bg: #0a0a0a;
+  --text: #f0f0f0;
+  --card: #121212;
+  --accent: #d4bfff;
+  --gradient: linear-gradient(135deg, #b76aff, #ff66c4);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-size: var(--font-size, 16px);
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.btn {
+  background: var(--gradient);
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.card-ui {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+}
+
+/* Accessibility */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
