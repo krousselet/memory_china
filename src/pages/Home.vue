@@ -70,19 +70,34 @@ useI18n()
   height: clamp(70px, 16vw, 140px);
   background: var(--card);
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   animation: float 3s ease-in-out infinite;
 }
 
-.card-float:nth-child(2) { animation-delay: 0.2s; }
-.card-float:nth-child(3) { animation-delay: 0.4s; }
-.card-float:nth-child(4) { animation-delay: 0.6s; }
-.card-float:nth-child(5) { animation-delay: 0.8s; }
-.card-float:nth-child(6) { animation-delay: 1s; }
+.card-float:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.card-float:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.card-float:nth-child(4) {
+  animation-delay: 0.6s;
+}
+.card-float:nth-child(5) {
+  animation-delay: 0.8s;
+}
+.card-float:nth-child(6) {
+  animation-delay: 1s;
+}
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 .nav-buttons {
@@ -103,7 +118,7 @@ useI18n()
 
 .primary {
   background: var(--gradient);
-  color: white;
+  color: var(--text);
 }
 
 .secondary {

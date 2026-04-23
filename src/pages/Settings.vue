@@ -5,12 +5,12 @@
 
       <div class="setting-group">
         <label>{{ $t('darkMode') }}</label>
-        <input type="checkbox" v-model="store.darkMode" @change="store.toggleDark">
+        <input type="checkbox" :checked="store.darkMode" @change="store.toggleDark()" />
       </div>
 
       <div class="setting-group">
         <label>{{ $t('music') }}</label>
-        <input type="checkbox" v-model="store.music" @change="store.toggleMusic">
+        <input type="checkbox" v-model="store.music" @change="store.toggleMusic" />
       </div>
 
       <div class="setting-group">
@@ -25,7 +25,7 @@
 
       <div class="setting-group">
         <label>{{ $t('language') }}</label>
-          <select v-model="locale" @change="changeLang($event)">
+        <select v-model="locale" @change="changeLang($event)">
           <option value="fr">Français</option>
           <option value="id">Indonesia</option>
           <option value="zh">中文</option>
@@ -83,11 +83,12 @@ h1 {
   justify-content: space-between;
   align-items: center;
   padding: 1.2rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   font-size: 1.2rem;
 }
 
-select, input[type="checkbox"] {
+select,
+input[type='checkbox'] {
   transform: scale(1.2);
   padding: 0.4rem;
   border-radius: 8px;

@@ -48,5 +48,6 @@
   "currentStreak": "Série actuelle",
   "bestStreak": "Meilleure série",
   "youWon": "Vous avez gagné",
-  "youLost": "Vous avez perdu"
+  "youLost": "Vous avez perdu",
+  "useJoker": "Utiliser joker"
 }

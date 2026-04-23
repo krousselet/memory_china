@@ -4,12 +4,7 @@
       <h1>{{ $t('play') }}</h1>
 
       <div class="grid">
-        <div 
-          class="mode-card" 
-          v-for="mode in modes" 
-          :key="mode.id"
-          @click="selectMode(mode)"
-        >
+        <div class="mode-card" v-for="mode in modes" :key="mode.id" @click="selectMode(mode)">
           <h2>{{ $t(mode.id) }}</h2>
           <p>{{ $t(mode.desc) }}</p>
         </div>
@@ -18,10 +13,10 @@
       <div v-if="selectedMode" class="difficulty">
         <h3>{{ $t('chooseDifficulty') }}</h3>
         <div class="diff-buttons">
-          <button 
-            v-for="d in difficulties" 
-            :key="d" 
-            class="btn" 
+          <button
+            v-for="d in difficulties"
+            :key="d"
+            class="btn"
             @click="startGame(selectedMode, d)"
           >
             {{ $t(d) }}
@@ -36,7 +31,7 @@
 import { ref } from 'vue'
 import { useAppStore } from '@/stores/appStore'
 import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router' 
+import { useRouter } from 'vue-router'
 import type { GameMode, Difficulty } from '@/types'
 const router = useRouter()
 
@@ -61,7 +56,7 @@ const selectMode = (mode: { id: GameMode }) => {
 
 const startGame = (mode: GameMode, diff: Difficulty) => {
   store.startGame(mode, diff)
-  router.push('/game') 
+  router.push('/game')
 }
 </script>
 
@@ -101,7 +96,7 @@ h1 {
 
 .mode-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 .difficulty {
@@ -119,7 +114,7 @@ h1 {
 .btn {
   padding: 0.8rem 2rem;
   background: var(--gradient);
-  color: white;
+  color: var(--text);
   border: none;
   border-radius: 999px;
   font-weight: bold;

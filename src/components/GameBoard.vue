@@ -43,9 +43,10 @@ const flip = (idx: number) => {
   aspect-ratio: 1/1;
   font-size: 1.5rem;
   border-radius: 12px;
-  border: none;
   background: var(--card);
   color: var(--text);
   cursor: pointer;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
 }
 </style>
