@@ -11,6 +11,11 @@ export const useAppStore = defineStore('app', {
   state: () => ({
     darkMode: false,
     music: true,
+    flipSound: null as HTMLAudioElement | null,
+    matchSound: null as HTMLAudioElement | null,
+    jokerSound: null as HTMLAudioElement | null,
+    winSound: null as HTMLAudioElement | null,
+    lostSound: null as HTMLAudioElement | null,
     fontSize: '16px',
     locale: 'en',
     audio: null as HTMLAudioElement | null,
@@ -24,15 +29,68 @@ export const useAppStore = defineStore('app', {
     bestStreak: 0,
     gameWon: false,
     gameLost: false,
+    autoShuffleTimer: null as any,
+    shuffleHistory: [] as Card[],
 
     joker1Used: false,
     joker2Used: false,
     joker3Used: false,
     shuffleCooldown: false,
     allowOneMistake: false,
+    attempts: 0, // Flipped cards amount
+    jokersUsedTotal: 0,
+
+    leaderboard: [] as Array<{
+      mode: string
+      difficulty: string
+      streak: number
+      timeLeft?: number
+      date: string
+      jokers: Number
+      attempts: Number
+    }>,
   }),
 
   actions: {
+    loadLeaderboard() {
+      const data = localStorage.getItem('leaderboard')
+      if (data) this.leaderboard = JSON.parse(data)
+    },
+
+    getLeaderboard(mode: GameMode | 'all') {
+      const all = JSON.parse(localStorage.getItem('leaderboard') || '[]')
+
+      if (mode === 'all') return all
+
+      return all.filter((item: any) => item.mode === mode)
+    },
+
+    saveToLeaderboard() {
+      //Only save if game is won AND not already saved
+      if (!this.gameWon || !this.currentGameMode || !this.currentDifficulty) return
+
+      const entry = {
+        mode: this.currentGameMode,
+        difficulty: this.currentDifficulty,
+        streak: this.streak,
+        attempts: this.attempts,
+        jokers: this.jokersUsedTotal,
+        timeLeft: this.timeLeft,
+        date: new Date().toLocaleString(),
+      }
+
+      // Add to leaderboard
+      this.leaderboard.unshift(entry)
+      if (this.leaderboard.length > 20) this.leaderboard = this.leaderboard.slice(0, 20)
+
+      // Save to localStorage
+      localStorage.setItem('leaderboard', JSON.stringify(this.leaderboard))
+    },
+
+    clearAllScores() {
+      this.leaderboard = []
+      localStorage.removeItem('leaderboard')
+    },
     // ------------------------------
     // DARK MODE (NO WATCH, PINIA COMPATIBLE)
     // ------------------------------
@@ -49,27 +107,115 @@ export const useAppStore = defineStore('app', {
     },
 
     // ------------------------------
+    // AUTO SHUFFLE
+    // ------------------------------
+    startAutoShuffle() {
+      if (this.currentGameMode !== 'shuffle') return
+
+      let delay = 12
+      if (this.currentDifficulty === 'medium') delay = 8
+      if (this.currentDifficulty === 'hard') delay = 5
+
+      // ✅ Auto-shuffle loops NONSTOP until game is won
+      this.autoShuffleTimer = setInterval(() => {
+        if (!this.gameWon && !this.gameLost && !this.shuffleCooldown) {
+          this.autoShuffleCards()
+        }
+      }, delay * 1000)
+    },
+
+    // ✅ AUTO SHUFFLE LOGIC (reveal cards → shuffle → hide)
+    autoShuffleCards() {
+      if (this.gameWon || this.gameLost) return
+      this.shuffleHistory = JSON.parse(JSON.stringify(this.gameCards))
+      // Step 1: Reveal all unmatched cards briefly
+      this.gameCards.forEach((c) => {
+        if (!c.matched) c.flipped = true
+      })
+
+      // Step 2: After 1.5s → shuffle & flip back
+      setTimeout(() => {
+        const unmatched = this.gameCards.filter((c) => !c.matched)
+        if (unmatched.length < 2) return
+
+        // Get values safely (all strings)
+        const values = unmatched.map((c) => c.value)
+        values.sort(() => Math.random() - 0.5)
+
+        let idx = 0
+        this.gameCards.forEach((c) => {
+          if (!c.matched) {
+            // ✅ Safe assignment (no undefined)
+            const val = values[idx]
+            if (val !== undefined) {
+              c.value = val
+            }
+            idx++
+            c.flipped = false
+          }
+        })
+      }, 1500)
+    },
+
+    undoShuffle() {
+      if (this.currentGameMode !== 'shuffle' || !this.shuffleHistory.length) return
+      // ✅ Restore exact previous order
+      this.gameCards = JSON.parse(JSON.stringify(this.shuffleHistory))
+    },
+
+    // ------------------------------
     // MUSIC
     // ------------------------------
     initMusic() {
       const saved = localStorage.getItem('music')
       this.music = saved === null || saved === 'true'
 
+      // Background music
       this.audio = new Audio('/bgm.mp3')
       this.audio.loop = true
-      this.audio.volume = 0.3
+      this.audio.volume = 0.25
+
+      // Sound effects
+      this.flipSound = new Audio('/sounds/flip_card.mp3')
+      this.matchSound = new Audio('/sounds/match.mp3')
+      this.jokerSound = new Audio('/sounds/joker_use.mp3')
+      this.winSound = new Audio('/sounds/win.mp3')
+      this.lostSound = new Audio('/sounds/lost.mp3')
+
+      ;[this.flipSound, this.matchSound, this.jokerSound, this.winSound].forEach((s) => {
+        if (s) s.volume = 0.4
+      })
     },
 
     toggleMusic() {
+      // Flip the state FIRST
       this.music = !this.music
       localStorage.setItem('music', String(this.music))
 
-      if (!this.audio) return
-      if (this.music) {
+      // If we just enabled sound: play background music
+      if (this.music && this.audio) {
         this.audio.play().catch(() => {})
-      } else {
-        this.audio.pause()
       }
+    },
+
+    // ✅ Play sound helper
+    playSound(sound: HTMLAudioElement | null) {
+      if (!this.music || !sound) return
+      sound.currentTime = 0
+      sound.play().catch(() => {})
+    },
+
+    playFlip() {
+      this.playSound(this.flipSound)
+    },
+    playMatch() {
+      this.playSound(this.matchSound)
+    },
+    playJoker() {
+      this.playSound(this.jokerSound)
+    },
+    playWin() {
+      this.playSound(this.winSound)
     },
 
     // ------------------------------
@@ -99,7 +245,11 @@ export const useAppStore = defineStore('app', {
       this.joker3Used = false
       this.shuffleCooldown = false
       this.allowOneMistake = false
+      this.attempts = 0
+      this.jokersUsedTotal = 0
+
       clearInterval(this.timer)
+      clearInterval(this.autoShuffleTimer) // Clear old auto shuffle
 
       const pairs = diff === 'easy' ? 4 : diff === 'medium' ? 6 : diff === 'hard' ? 8 : 10
       this.generateCards(pairs)
@@ -112,14 +262,24 @@ export const useAppStore = defineStore('app', {
         this.gameCards.forEach((c) => {
           c.flipped = false
         })
+
+        // ✅ START AUTO SHUFFLE ONLY FOR SHUFFLE MODE
+        if (mode === 'shuffle') {
+          this.startAutoShuffle()
+        }
       }, showTime * 1000)
 
       if (mode === 'beat-the-clock') {
         this.timeLeft = 60
         this.timer = setInterval(() => {
+          if (this.gameWon) {
+            clearInterval(this.timer)
+            return
+          }
           this.timeLeft--
           if (this.timeLeft <= 0) {
             this.gameLost = true
+            this.playLost()
             clearInterval(this.timer)
           }
         }, 1000)
@@ -142,6 +302,7 @@ export const useAppStore = defineStore('app', {
       if (!this.gameCards[index]) return
       const card = this.gameCards[index]
       if (card.flipped || card.matched) return
+      this.playFlip()
       card.flipped = true
       this.checkMatches()
     },
@@ -149,7 +310,7 @@ export const useAppStore = defineStore('app', {
     checkMatches() {
       const flipped = this.gameCards.filter((c) => c.flipped && !c.matched)
       if (flipped.length !== 2) return
-
+      this.attempts++
       const a = flipped[0]
       const b = flipped[1]
       if (!a || !b) return
@@ -157,8 +318,17 @@ export const useAppStore = defineStore('app', {
       if (a.value === b.value) {
         a.matched = true
         b.matched = true
+        this.playMatch()
         this.streak++
-        if (this.gameCards.every((c) => c.matched)) this.gameWon = true
+
+        const allDone = this.gameCards.every((c) => c.matched)
+        if (allDone) {
+          this.gameWon = true
+          clearInterval(this.timer)
+          clearInterval(this.autoShuffleTimer) // ✅ ONLY STOP ON FULL WIN
+          this.playWin()
+          this.saveToLeaderboard() // ✅ ONLY SAVE ONCE AT THE END
+        }
       } else {
         setTimeout(() => {
           a.flipped = false
@@ -175,8 +345,10 @@ export const useAppStore = defineStore('app', {
     // JOKERS
     // ------------------------------
     useJoker1() {
+      this.playJoker()
       if (this.gameWon || this.gameLost || this.joker1Used) return
       this.joker1Used = true
+      this.jokersUsedTotal++
 
       if (this.currentGameMode === 'longest-streak') {
         this.allowOneMistake = true
@@ -199,8 +371,10 @@ export const useAppStore = defineStore('app', {
     },
 
     useJoker2() {
+      this.playJoker()
       if (this.gameWon || this.gameLost || this.joker2Used) return
       this.joker2Used = true
+      this.jokersUsedTotal++
 
       const m = this.currentGameMode
       if (m === 'classic' || m === 'longest-streak') {
@@ -230,8 +404,10 @@ export const useAppStore = defineStore('app', {
     },
 
     useJoker3() {
+      this.playJoker()
       if (this.gameWon || this.gameLost || this.joker3Used) return
       this.joker3Used = true
+      this.jokersUsedTotal++
 
       const m = this.currentGameMode
       if (m === 'classic') {
@@ -257,6 +433,11 @@ export const useAppStore = defineStore('app', {
         }, 800)
         return
       }
+
+      if (m === 'shuffle') {
+        this.undoShuffle() // ✅ NOW WORKS
+        return
+      }
     },
 
     // ------------------------------
@@ -277,7 +458,12 @@ export const useAppStore = defineStore('app', {
 
     restartGame() {
       clearInterval(this.timer)
+      clearInterval(this.autoShuffleTimer)
       this.startGame(this.currentGameMode!, this.currentDifficulty!)
+    },
+
+    playLost() {
+      this.playSound(this.lostSound)
     },
   },
 })

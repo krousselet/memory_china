@@ -48,5 +48,20 @@
   "currentStreak": "当前连胜",
   "bestStreak": "最佳连胜",
   "youWon": "你赢了",
-  "youLost": "你输了"
+  "youLost": "你输了",
+  "clearAllScores": "清除所有分数",
+  "all": "全部",
+  "joker1_classic": "显示一对牌",
+  "joker1_beat_the_clock": "显示一对牌",
+  "joker1_longest_streak": "允许一次失误",
+  "joker1_shuffle": "显示一对牌",
+
+  "joker2_classic": "显示一张牌",
+  "joker2_beat_the_clock": "暂停计时器10秒",
+  "joker2_longest_streak": "显示一张牌",
+  "joker2_shuffle": "禁止洗牌30秒",
+  "joker3_classic": "短暂显示所有牌",
+  "joker3_beat_the_clock": "+15秒",
+  "joker3_longest_streak": "显示一张牌",
+  "joker3_shuffle": "撤销洗牌"
 }

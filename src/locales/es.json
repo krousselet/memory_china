@@ -49,5 +49,20 @@
   "bestStreak": "Mejor Racha",
   "youWon": "Has Ganado",
   "youLost": "Has Perdido",
-  "useJoker": "Utilizar comodine"
+  "useJoker": "Utilizar comodine",
+  "clearAllScores": "Borrar todas las puntuaciones",
+  "all": "Todas",
+  "joker1_classic": "Revelar un par",
+  "joker1_beat_the_clock": "Revelar un par",
+  "joker1_longest_streak": "Permitir un error",
+  "joker1_shuffle": "Revelar un par",
+
+  "joker2_classic": "Revelar una carta",
+  "joker2_beat_the_clock": "Detener temporizador 10s",
+  "joker2_longest_streak": "Revelar una carta",
+  "joker2_shuffle": "Bloquear barajar 30s",
+  "joker3_classic": "Revelar todo brevemente",
+  "joker3_beat_the_clock": "+15 segundos",
+  "joker3_longest_streak": "Revelar una carta",
+  "joker3_shuffle": "Deshacer barajar"
 }

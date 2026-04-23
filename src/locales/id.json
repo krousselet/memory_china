@@ -48,5 +48,20 @@
   "currentStreak": "Rantai Saat Ini",
   "bestStreak": "Rantai Terbaik",
   "youWon": "Kamu Menang",
-  "youLost": "Kamu Kalah"
+  "youLost": "Kamu Kalah",
+  "clearAllScores": "Hapus semua skor",
+  "all": "Semua",
+  "joker1_classic": "Tampilkan pasangan",
+  "joker1_beat_the_clock": "Tampilkan pasangan",
+  "joker1_longest_streak": "Izinkan satu kesalahan",
+  "joker1_shuffle": "Tampilkan pasangan",
+
+  "joker2_classic": "Tampilkan satu kartu",
+  "joker2_beat_the_clock": "Hentikan timer 10s",
+  "joker2_longest_streak": "Tampilkan satu kartu",
+  "joker2_shuffle": "Blokir acak 30s",
+  "joker3_classic": "Tampilkan semua sebentar",
+  "joker3_beat_the_clock": "+15 detik",
+  "joker3_longest_streak": "Tampilkan satu kartu",
+  "joker3_shuffle": "Batalkan acak"
 }

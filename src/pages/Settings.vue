@@ -1,5 +1,5 @@
 <template>
-  <main class="settings" aria-label="Settings">
+  <main class="settings leaderboard page-transition" aria-label="Settings">
     <div class="container">
       <h1>{{ $t('settings') }}</h1>
 
@@ -9,8 +9,10 @@
       </div>
 
       <div class="setting-group">
-        <label>{{ $t('music') }}</label>
-        <input type="checkbox" v-model="store.music" @change="store.toggleMusic" />
+        <label>
+          {{ $t('sound') }}
+          <input type="checkbox" :checked="store.music" @change="store.toggleMusic()" />
+        </label>
       </div>
 
       <div class="setting-group">

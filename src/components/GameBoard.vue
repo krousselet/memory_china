@@ -25,7 +25,7 @@ const gridCols = computed(() => {
   return count === 0 ? 4 : Math.ceil(Math.sqrt(count))
 })
 
-// Flip card using YOUR store
+// Flip card using store
 const flip = (idx: number) => {
   store.flipCard(idx)
 }

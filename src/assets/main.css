@@ -1,69 +1,272 @@
+/* ============================== */
+/* GLOBAL THEME VARIABLES
+/* ============================== */
 :root {
+  /* Core Colors */
   --bg: #f8fafc;
   --text: #1e293b;
   --surface: #ffffff;
   --border: #e2e8f0;
+
+  /* Card Styles */
   --card-bg: #ffffff;
   --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --card-back: #4f46e5;
+  --card-hover: #6366f1;
+  --card-flipped: #ffffff;
+
+  /* UI Colors */
+  --accent: #4f46e5;
+  --success: #10b981;
+  --gradient: linear-gradient(135deg, #4f46e5, #7c3aed);
 }
 
 :root.dark {
+  /* Core Colors */
   --bg: #0f172a;
   --text: #f1f5f9;
   --surface: #1e293b;
   --border: #334155;
+
+  /* Card Styles */
   --card-bg: #1e293b;
   --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --card-back: #6366f1;
+  --card-hover: #818cf8;
+  --card-flipped: #1e293b;
+
+  /* UI Colors */
+  --accent: #818cf8;
+  --success: #34d399;
+  --gradient: linear-gradient(135deg, #6366f1, #8b5cf6);
 }
 
+/* ============================== */
+/* GLOBAL RESET & BASE STYLES
+/* ============================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* Smooth theme transition */
   transition:
     background-color 0.3s ease,
     color 0.3s ease,
-    border-color 0.3s ease;
+    border-color 0.3s ease,
+    transform 0.3s ease;
 }
 
 body {
   background: var(--bg);
   color: var(--text);
-  font-size: var(--font-size, 16px);
+  font-family: 'Segoe UI', Roboto, sans-serif;
   min-height: 100vh;
+  line-height: 1.5;
+}
+
+html {
+  font-size: var(--root-font-size, 16px);
 }
 
 .container {
   width: 100%;
-  max-width: 1920px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 1rem;
 }
 
+/* ------------------------------ */
+/* PAGE FADE ANIMATION */
+/* ------------------------------ */
+.page-transition {
+  animation: pageFade 0.5s ease forwards;
+  opacity: 0;
+}
+
+@keyframes pageFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------ */
+/* MOBILE FULLSCREEN SWIPE MODE */
+/* ------------------------------ */
+@media (max-width: 768px) {
+  .mobile-swipe-container {
+    height: 100vh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+  }
+
+  .mobile-swipe-section {
+    height: 100vh;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  /* Hide scrollbar for clean look */
+  .mobile-swipe-container::-webkit-scrollbar {
+    display: none;
+  }
+  .mobile-swipe-container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* ============================== */
+/* BUTTONS & UI COMPONENTS
+/* ============================== */
 .btn {
   background: var(--gradient);
-  color: black;
+  color: white;
   border: none;
   padding: 0.8rem 2rem;
   border-radius: 999px;
   font-weight: 600;
   cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.btn:hover {
+  transform: scale(1.03);
 }
 
 .btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+  transform: none;
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-radius: 12px;
 }
 
 .card-ui {
-  background: var(--card);
+  background: var(--surface);
   border-radius: 16px;
   padding: 2rem;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border);
 }
 
-/* Accessibility */
+/* ============================== */
+/* GAME CARD STYLES & ANIMATIONS
+/* ============================== */
+.card-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.card {
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  cursor: pointer;
+  box-shadow: var(--card-shadow);
+  user-select: none;
+  border: 1px solid var(--border);
+}
+
+.card.back {
+  background: var(--card-back);
+}
+
+.card:hover:not(.matched):not(.flipped) {
+  background: var(--card-hover);
+  transform: scale(1.05);
+}
+
+.card.flipped {
+  background: var(--card-flipped);
+}
+
+.card.matched {
+  background: var(--success);
+  color: white;
+  animation: pop 0.45s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ============================== */
+/* GAME LAYOUT
+/* ============================== */
+.game-header {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.game-stats {
+  display: flex;
+  gap: 2.5rem;
+  justify-content: center;
+  margin: 1rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.jokers-container {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+
+.joker-btn {
+  padding: 0.7rem 1.1rem;
+  background: #f97316;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.joker-btn:hover {
+  transform: scale(1.05);
+}
+
+.joker-btn:disabled {
+  background: #999;
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+}
+
+/* ============================== */
+/* ACCESSIBILITY
+/* ============================== */
 :focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 4px;

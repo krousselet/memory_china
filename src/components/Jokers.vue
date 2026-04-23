@@ -5,7 +5,7 @@
       :disabled="store.joker1Used || store.gameWon || store.gameLost"
       @click="store.useJoker1()"
     >
-      {{ joker1Text }}
+      {{ $t(joker1Key) }}
     </button>
 
     <button
@@ -13,7 +13,7 @@
       :disabled="store.joker2Used || store.gameWon || store.gameLost"
       @click="store.useJoker2()"
     >
-      {{ joker2Text }}
+      {{ $t(joker2Key) }}
     </button>
 
     <button
@@ -21,7 +21,7 @@
       :disabled="store.joker3Used || store.gameWon || store.gameLost"
       @click="store.useJoker3()"
     >
-      {{ joker3Text }}
+      {{ $t(joker3Key) }}
     </button>
   </div>
 </template>
@@ -32,31 +32,20 @@ import { computed } from 'vue'
 
 const store = useAppStore()
 
-const joker1Text = computed(() => {
-  const m = store.currentGameMode
-  if (m === 'classic') return 'Reveal a pair'
-  if (m === 'beat-the-clock') return 'Reveal a pair'
-  if (m === 'longest-streak') return 'Allow one mistake'
-  if (m === 'shuffle') return 'Reveal a pair'
-  return 'Joker 1'
+// Get translation key based on game mode
+const joker1Key = computed(() => {
+  const mode = store.currentGameMode
+  return `joker1_${mode?.replace('-', '_') || 'default'}`
 })
 
-const joker2Text = computed(() => {
-  const m = store.currentGameMode
-  if (m === 'classic') return 'Reveal one card'
-  if (m === 'beat-the-clock') return 'Stop timer 10s'
-  if (m === 'longest-streak') return 'Reveal a pair'
-  if (m === 'shuffle') return 'Prevent shuffle 30s'
-  return 'Joker 2'
+const joker2Key = computed(() => {
+  const mode = store.currentGameMode
+  return `joker2_${mode?.replace('-', '_') || 'default'}`
 })
 
-const joker3Text = computed(() => {
-  const m = store.currentGameMode
-  if (m === 'classic') return 'Reveal all 3s'
-  if (m === 'beat-the-clock') return '+15 seconds'
-  if (m === 'longest-streak') return 'Reveal one card'
-  if (m === 'shuffle') return 'Undo shuffle'
-  return 'Joker 3'
+const joker3Key = computed(() => {
+  const mode = store.currentGameMode
+  return `joker3_${mode?.replace('-', '_') || 'default'}`
 })
 </script>
 

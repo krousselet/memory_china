@@ -48,5 +48,20 @@
   "currentStreak": "Serie Attuale",
   "bestStreak": "Serie Migliore",
   "youWon": "Hai Vinto",
-  "youLost": "Hai Perso"
+  "youLost": "Hai Perso",
+  "clearAllScores": "Cancella tutti i punteggi",
+  "all": "Tutti",
+  "joker1_classic": "Rivela una coppia",
+  "joker1_beat_the_clock": "Rivela una coppia",
+  "joker1_longest_streak": "Permetti un errore",
+  "joker1_shuffle": "Rivela una coppia",
+
+  "joker2_classic": "Rivela una carta",
+  "joker2_beat_the_clock": "Ferma il timer 10s",
+  "joker2_longest_streak": "Rivela una carta",
+  "joker2_shuffle": "Blocca mescolamento 30s",
+  "joker3_classic": "Rivela tutto brevemente",
+  "joker3_beat_the_clock": "+15 secondi",
+  "joker3_longest_streak": "Rivela una carta",
+  "joker3_shuffle": "Annulla mescolamento"
 }

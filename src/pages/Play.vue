@@ -1,5 +1,5 @@
 <template>
-  <main class="play" aria-label="Play game">
+  <main class="play leaderboard page-transition" aria-label="Play game">
     <div class="container">
       <h1>{{ $t('play') }}</h1>
 

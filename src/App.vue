@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import { useAppStore } from '@/stores/appStore'
 const store = useAppStore()
-
+store.loadLeaderboard()
 store.initTheme()
 store.initMusic()
 </script>
@@ -21,6 +21,8 @@ body {
   font-family: 'Segoe UI', sans-serif;
   background: var(--bg);
   color: var(--text);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 </style>

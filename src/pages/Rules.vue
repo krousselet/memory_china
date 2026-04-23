@@ -1,5 +1,5 @@
 <template>
-  <main class="rules" aria-label="Game rules">
+  <main class="rules leaderboard page-transition" aria-label="Game rules">
     <div class="container">
       <h1>{{ $t('rules') }}</h1>
 

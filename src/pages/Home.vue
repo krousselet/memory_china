@@ -1,5 +1,5 @@
 <template>
-  <main class="home" aria-label="Home page">
+  <main class="home leaderboard page-transition" aria-label="Home page">
     <div class="content">
       <h1 class="logo">{{ $t('appName') }}</h1>
       <p class="subtitle">{{ $t('welcome') }}</p>

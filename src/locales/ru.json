@@ -48,5 +48,20 @@
   "currentStreak": "Текущая серия",
   "bestStreak": "Лучшая серия",
   "youWon": "Вы выиграли",
-  "youLost": "Вы проиграли"
+  "youLost": "Вы проиграли",
+  "clearAllScores": "Очистить все результаты",
+  "all": "Все",
+  "joker1_classic": "Показать пару",
+  "joker1_beat_the_clock": "Показать пару",
+  "joker1_longest_streak": "Разрешить одну ошибку",
+  "joker1_shuffle": "Показать пару",
+
+  "joker2_classic": "Показать одну карту",
+  "joker2_beat_the_clock": "Остановить таймер 10с",
+  "joker2_longest_streak": "Показать одну карту",
+  "joker2_shuffle": "Запретить тасовку 30с",
+  "joker3_classic": "Показать всё на мгновение",
+  "joker3_beat_the_clock": "+15 секунд",
+  "joker3_longest_streak": "Показать одну карту",
+  "joker3_shuffle": "Отменить тасовку"
 }

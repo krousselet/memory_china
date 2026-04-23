@@ -49,5 +49,20 @@
   "bestStreak": "Meilleure série",
   "youWon": "Vous avez gagné",
   "youLost": "Vous avez perdu",
-  "useJoker": "Utiliser joker"
+  "useJoker": "Utiliser joker",
+  "clearAllScores": "Effacer tous les scores",
+  "all": "Tous",
+  "joker1_classic": "Révéler une paire",
+  "joker1_beat_the_clock": "Révéler une paire",
+  "joker1_longest_streak": "Autoriser une erreur",
+  "joker1_shuffle": "Révéler une paire",
+
+  "joker2_classic": "Révéler une carte",
+  "joker2_beat_the_clock": "Arrêter le timer 10s",
+  "joker2_longest_streak": "Révéler une carte",
+  "joker2_shuffle": "Empêcher le mélange 30s",
+  "joker3_classic": "Révéler tout brièvement",
+  "joker3_beat_the_clock": "+15 secondes",
+  "joker3_longest_streak": "Révéler une carte",
+  "joker3_shuffle": "Annuler le mélange"
 }

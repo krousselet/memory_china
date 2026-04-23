@@ -48,5 +48,20 @@
   "currentStreak": "現在の連続記録",
   "bestStreak": "最高記録",
   "youWon": "あなたの勝ちです",
-  "youLost": "あなたの負けです"
+  "youLost": "あなたの負けです",
+  "clearAllScores": "スコアをすべてクリア",
+  "all": "すべて",
+  "joker1_classic": "ペアを表示",
+  "joker1_beat_the_clock": "ペアを表示",
+  "joker1_longest_streak": "ミスを1回許可",
+  "joker1_shuffle": "ペアを表示",
+
+  "joker2_classic": "カードを1枚表示",
+  "joker2_beat_the_clock": "タイマーを10秒停止",
+  "joker2_longest_streak": "カードを1枚表示",
+  "joker2_shuffle": "シャッフルを30秒禁止",
+  "joker3_classic": "一時的にすべて表示",
+  "joker3_beat_the_clock": "+15秒",
+  "joker3_longest_streak": "カードを1枚表示",
+  "joker3_shuffle": "シャッフルを取り消し"
 }
