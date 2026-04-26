@@ -1,23 +1,40 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import MainLayout from '@/layouts/MainLayout.vue'
+import Home from '@/pages/Home.vue'
+import Game from '@/pages/Game.vue'
+import Leaderboard from '@/pages/Leaderboard.vue'
+import Settings from '@/pages/Settings.vue'
 
 const routes = [
   {
     path: '/',
-    component: MainLayout,
-    children: [
-      { path: '', component: () => import('@/pages/Home.vue') },
-      { path: 'play', component: () => import('@/pages/Play.vue') },
-      { path: 'settings', component: () => import('@/pages/Settings.vue') },
-      { path: 'leaderboard', component: () => import('@/pages/Leaderboard.vue') },
-      { path: 'rules', component: () => import('@/pages/Rules.vue') },
-      { path: 'game', component: () => import('@/pages/Game.vue') },
-    ],
+    name: 'Home',
+    component: Home,
+  },
+  {
+    path: '/game',
+    name: 'Game',
+    component: Game,
+  },
+  {
+    path: '/leaderboard',
+    name: 'Leaderboard',
+    component: Leaderboard,
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: Settings,
+  },
+  // Catch 404 — redirect to home (prevents broken refresh)
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/',
   },
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  // THIS FIXES REFRESH + CLEAN URLS (NO # IN URL)
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 })
 
